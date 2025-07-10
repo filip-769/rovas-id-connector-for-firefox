@@ -1,6 +1,6 @@
 This is a draft - instructions for developers only for now ...
 
-Ti install:
+To install:
 
 1. Open Chrome Extensions:
 Go to the Chrome extensions page by either typing chrome://extensions in the address bar or by clicking the three dots in the top right corner of Chrome, selecting "More tools," and then "Extensions".
