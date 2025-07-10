@@ -67,7 +67,7 @@ function createTimerBadge() {
   startBtn.onclick = startSession;
 
   const pauseBtn = document.createElement("button");
-  pauseBtn.textContent = "Pause"; // Translated from "Pausa"
+  pauseBtn.textContent = "Pause"; 
   pauseBtn.id = "rovas-pause-btn";
   pauseBtn.style.cursor = "pointer";
   pauseBtn.onclick = pauseSession;
@@ -150,7 +150,7 @@ function resetTimer() {
   latestChangesetId = null;
   updateTimerText(0);
   setButtonsState('stopped');
-  console.log("[ROVAS] Timer reset."); // Translated from "resetted"
+  console.log("[ROVAS] Timer reset."); 
 }
 
 function setButtonsState(state) {
