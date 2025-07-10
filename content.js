@@ -220,7 +220,7 @@ async function checkOrCreateShareholder() {
 
     try {
         const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", {
-//        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", { // PROD
+//        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
