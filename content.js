@@ -342,7 +342,7 @@ async function sendRovasReport(changesetId) {
         // We ask the user for confirmation before sending the report to Rovas
         if (confirm(`Do you want to submit the report to Rovas (Changeset ID: ${changesetId}, duration: ${(actualDurationMs / 60000).toFixed(2)} minutes)?`)) {
             const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {
-//            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", { // PROD
+//            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
