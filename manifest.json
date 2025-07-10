@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ROVAS Connector for iD Editor",
+  "version": "0.1",
+  "description": "Tracks editing session in Openstreetmap iD and sends working reports to ROVAS App.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webRequest"  
+  ],
+  "host_permissions": [
+    "https://www.openstreetmap.org/edit*",
+    "https://api.openstreetmap.org/*",  // We need to access OSM API
+    "https://dev.rovas.app/*",         // We need to access Rovas API
+    "https://overpass-api.de/*",        // We may need to access ACHAVI LINK
+	"https://neofund.sk/*" 
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.openstreetmap.org/edit*"], 
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"  // service worker declaration for background
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png"
+  }
+}

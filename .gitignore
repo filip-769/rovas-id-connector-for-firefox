@@ -1,0 +1,14 @@
+# Ignore common OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Ignore Node.js dependencies (if you ever use them)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore local Chrome extension files
+*.crx
+*.pem

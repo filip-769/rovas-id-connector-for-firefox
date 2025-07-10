@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenStreetMap iD Time Tracker for ROVAS</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 15px;
+      width: 280px;
+      line-height: 1.4;
+      color: #333;
+    }
+    h3 {
+      color: #007bff;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+    strong {
+      color: #0056b3;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    input[type="text"] {
+      width: calc(100% - 20px); /* Adjust width considering padding */
+      padding: 8px 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 15px;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #rovasPageBtn { /* Specific ID for the "Open Rovas" button */
+      background-color: #007bff; /* Blue for the Rovas page button */
+    }
+    #rovasPageBtn:hover {
+      background-color: #0056b3;
+    }
+    #saveBtn { /* Specific ID for the Save button */
+      background-color: #6c757d; /* Gray for save button */
+    }
+    #saveBtn:hover {
+      background-color: #5a6268;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #666;
+    }
+    #configStatus { /* For displaying save/load status of keys */
+      margin-top: 10px;
+      font-size: 12px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h3>OSM iD Session Time Tracker for ROVAS</h3>
+  <p>This extension tracks the time spent working on <strong>OpenStreetMap iD</strong> and automatically submits work reports to the <strong>ROVAS App</strong>.</p>
+  <p>
+    <strong>NOTE:</strong> To use this extension, you must be a registered user in Rovas and have your <strong>API KEY</strong> and <strong>TOKEN</strong> (available on your account page). You also need to be a <strong>shareholder</strong> of the OpenStreetMap project (ID 1998).
+  </p>
+  <p>Click the button below to open the Rovas project page and get more information.</p>
+  <button id="rovasPageBtn">Open Rovas</button>
+
+  <hr style="margin: 20px 0; border-color: #eee;">
+
+  <h4>ROVAS API Credentials</h4>
+  <label for="apiKey">API KEY:</label>
+  <input type="text" id="apiKey" placeholder="Enter your ROVAS API KEY">
+
+  <label for="token">TOKEN:</label>
+  <input type="text" id="token" placeholder="Enter your ROVAS TOKEN">
+
+  <button id="saveBtn">Save Credentials</button>
+  <p id="configStatus"></p>
+
+  <script src="popup.js"></script>
+</body>
+</html>
