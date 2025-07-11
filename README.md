@@ -24,8 +24,6 @@ Please note that this extension is currently released in developer mode and is n
 Prerequisites: 
 - Google Chrome (or Chrome based Openstreetmap App)
 - ROVAS Account: You must be a registered user in the [ROVAS App](https://www.google.com/search?q=https://neofund.sk/rovas-api%23) and have your API KEY and TOKEN (available on your account page).
-- OSM Project Shareholder: You need to be recognized as a shareholder of the [OpenStreetMap project in Rovas](https://rovas.app/openstreetmap) for reports to be valid. The extension attempts to verify/add this automatically.
-
 
 **Steps to Install**
 
