@@ -58,6 +58,32 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(callback);
     }
 
+    // Dynamically populate language selector
+    async function populateLanguageSelector(currentLang, translations) {
+        // Get available locales from the extension's locales folder
+        const locales = ['en', 'hu', 'sk']; // fallback, will be replaced below
+        try {
+            const res = await fetch(chrome.runtime.getURL('locales/manifest.json'));
+            const manifest = await res.json();
+            if (manifest && Array.isArray(manifest.locales)) {
+                locales.length = 0;
+                manifest.locales.forEach(l => locales.push(l));
+            }
+        } catch (e) {
+            // fallback to hardcoded list
+        }
+        const langSelect = document.getElementById('langSelect');
+        langSelect.innerHTML = '';
+        locales.forEach(code => {
+            const opt = document.createElement('option');
+            opt.value = code;
+            opt.id = 'langOpt_' + code;
+            opt.textContent = translations['lang_' + code] || code;
+            if (code === currentLang) opt.selected = true;
+            langSelect.appendChild(opt);
+        });
+    }
+
     function updateUIText(t) {
         document.getElementById('titleText').textContent = t.title;
         document.getElementById('noteText').textContent = t.note;
@@ -69,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('saveBtn').textContent = t.save;
         document.getElementById('apiKey').placeholder = t.api_key_placeholder;
         document.getElementById('token').placeholder = t.token_placeholder;
+        document.getElementById('langLabel').textContent = t.language_label;
+        populateLanguageSelector(langSelect.value, t);
     }
 
     langSelect.addEventListener('change', () => {

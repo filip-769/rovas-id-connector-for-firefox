@@ -22,5 +22,9 @@
   "alert_report_success": "✅ Report automatically submitted to ROVAS! ID: {id}",
   "alert_report_id_missing": "⚠️ Report automatically transmitted to ROVAS. ID not detected in response.",
   "alert_report_cancelled": "Report submission to ROVAS cancelled. Timer has been reset.",
-  "alert_report_error": "❌ Error during report processing: {error}. Timer has been reset."
+  "alert_report_error": "❌ Error during report processing: {error}. Timer has been reset.",
+  "language_label": "Language:",
+  "lang_en": "English",
+  "lang_hu": "Hungarian",
+  "lang_sk": "Slovak"
 } 

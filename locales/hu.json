@@ -22,5 +22,9 @@
   "alert_report_success": "✅ Jelentés sikeresen elküldve a ROVAS-ba! ID: {id}",
   "alert_report_id_missing": "⚠️ Jelentés elküldve a ROVAS-ba, de azonosító nem található a válaszban.",
   "alert_report_cancelled": "A jelentés küldése megszakadt. Az időmérő vissza lett állítva.",
-  "alert_report_error": "❌ Hiba történt a jelentés feldolgozása során: {error}. Az időmérő vissza lett állítva."
+  "alert_report_error": "❌ Hiba történt a jelentés feldolgozása során: {error}. Az időmérő vissza lett állítva.",
+  "language_label": "Nyelv:",
+  "lang_en": "Angol",
+  "lang_hu": "Magyar",
+  "lang_sk": "Szlovák"
 } 

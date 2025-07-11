@@ -22,5 +22,9 @@
   "alert_report_success": "✅ Report bol úspešne odoslaný do Rováša! ID: {id}",
   "alert_report_id_missing": "⚠️ Report bol odoslaný do Rováša, ale ID nebolo zistené v odpovedi.",
   "alert_report_cancelled": "Odoslanie reportu do Rováša bolo zrušené. Časovač bol resetovaný.",
-  "alert_report_error": "❌ Chyba počas spracovania reportu: {error}. Časovač bol resetovaný."
+  "alert_report_error": "❌ Chyba počas spracovania reportu: {error}. Časovač bol resetovaný.",
+  "language_label": "Jazyk:",
+  "lang_en": "Anglicky",
+  "lang_hu": "Maďarsky",
+  "lang_sk": "Slovensky"
 } 
