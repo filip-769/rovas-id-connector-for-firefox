@@ -434,6 +434,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
+// --- Listen for language changes and update badge dynamically ---
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'sync' && changes.userLang) {
+    // Remove the old badge if present
+    const badge = document.getElementById("rovas-timer-badge");
+    if (badge) badge.remove();
+    // Recreate the badge with the new language
+    createTimerBadge();
+  }
+});
+
 // We start the badge again after the report sending is done
 if (window.location.href.includes("/edit")) {
   createTimerBadge();
