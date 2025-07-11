@@ -1,0 +1,12 @@
+{
+  "title": "OSM iD Session Time Tracker for ROVAS",
+  "note": "NOTE: To use this extension, you must be a registered user in Rovas and have your API KEY and TOKEN (available on your account page).",
+  "info": "Clicking the button below opens the OpenStreetMap project in Rovas.",
+  "open_rovas": "Open Rovas",
+  "api_creds_title": "ROVAS API Credentials",
+  "api_key_label": "API KEY:",
+  "token_label": "TOKEN:",
+  "save": "Save Credentials",
+  "api_key_placeholder": "Enter your ROVAS API KEY",
+  "token_placeholder": "Enter your ROVAS TOKEN"
+} 
