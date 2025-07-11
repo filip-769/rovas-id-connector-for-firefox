@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Helper to get translation object synchronously (from last loaded)
+    let lastTranslations = {};
+    function getT() { return lastTranslations; }
+
     // Event listener for the "Open Rovas" button
     rovasPageBtn.addEventListener('click', () => {
         chrome.tabs.create({ url: 'https://rovas.app/openstreetmap' });
@@ -27,15 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
     saveBtn.addEventListener('click', () => {
         const apiKey = apiKeyInput.value.trim();
         const token = tokenInput.value.trim();
-
+        const t = getT();
         if (apiKey && token) {
             chrome.storage.sync.set({ rovasApiKey: apiKey, rovasToken: token }, () => {
-                configStatus.textContent = 'Credentials saved successfully!';
+                configStatus.textContent = t.status_credentials_saved || 'Credentials saved successfully!';
                 configStatus.style.color = 'green';
                 setTimeout(() => { configStatus.textContent = ''; }, 3000); // Clear message after 3 seconds
             });
         } else {
-            configStatus.textContent = 'Please enter both API Key and Token.';
+            configStatus.textContent = t.status_credentials_error || 'Please enter both API Key and Token.';
             configStatus.style.color = 'red';
         }
     });
@@ -97,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('token').placeholder = t.token_placeholder;
         document.getElementById('langLabel').textContent = t.language_label;
         populateLanguageSelector(langSelect.value, t);
+        lastTranslations = t;
     }
 
     langSelect.addEventListener('change', () => {

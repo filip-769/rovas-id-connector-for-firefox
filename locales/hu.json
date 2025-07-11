@@ -26,5 +26,7 @@
   "language_label": "Nyelv:",
   "lang_en": "Angol",
   "lang_hu": "Magyar",
-  "lang_sk": "Szlovák"
+  "lang_sk": "Szlovák",
+  "status_credentials_saved": "Hitelesítő adatok sikeresen elmentve!",
+  "status_credentials_error": "Kérlek, add meg mind az API kulcsot, mind a tokent."
 } 

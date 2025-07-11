@@ -26,5 +26,7 @@
   "language_label": "Language:",
   "lang_en": "English",
   "lang_hu": "Hungarian",
-  "lang_sk": "Slovak"
+  "lang_sk": "Slovak",
+  "status_credentials_saved": "Credentials saved successfully!",
+  "status_credentials_error": "Please enter both API Key and Token."
 } 

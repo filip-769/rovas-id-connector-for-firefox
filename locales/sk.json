@@ -26,5 +26,7 @@
   "language_label": "Jazyk:",
   "lang_en": "Anglicky",
   "lang_hu": "Maďarsky",
-  "lang_sk": "Slovensky"
+  "lang_sk": "Slovensky",
+  "status_credentials_saved": "Prihlasovacie údaje boli úspešne uložené!",
+  "status_credentials_error": "Zadajte prosím API kľúč aj token."
 } 
