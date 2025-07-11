@@ -8,5 +8,19 @@
   "token_label": "TOKEN:",
   "save": "Save Credentials",
   "api_key_placeholder": "Enter your ROVAS API KEY",
-  "token_placeholder": "Enter your ROVAS TOKEN"
+  "token_placeholder": "Enter your ROVAS TOKEN",
+  "start": "Start",
+  "pause": "Pause",
+  "stop": "Stop",
+  "alert_session_stopped": "Session manually stopped. No report generated.",
+  "alert_missing_credentials": "Cannot send report: ROVAS API Key or Token is missing. Please configure them in the extension popup.",
+  "alert_timer_not_active": "Unable to send report: timer was not active.",
+  "alert_duration_short": "The session duration was too short to generate a ROVAS report. The timer has been reset.",
+  "alert_comment_error": "Error in getting changeset comment. Report will be created with a default comment.",
+  "alert_shareholder_error": "Could not verify or register Rovas project participation. Report submission cancelled.",
+  "confirm_submit_report": "Do you want to submit the report to Rovas (Changeset ID: {id}, duration: {duration} minutes)?",
+  "alert_report_success": "✅ Report automatically submitted to ROVAS! ID: {id}",
+  "alert_report_id_missing": "⚠️ Report automatically transmitted to ROVAS. ID not detected in response.",
+  "alert_report_cancelled": "Report submission to ROVAS cancelled. Timer has been reset.",
+  "alert_report_error": "❌ Error during report processing: {error}. Timer has been reset."
 } 

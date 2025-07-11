@@ -8,5 +8,19 @@
   "token_label": "TOKEN:",
   "save": "Uložiť údaje",
   "api_key_placeholder": "Zadajte svoj Rováš API KĽÚČ",
-  "token_placeholder": "Zadajte svoj Rováš TOKEN"
+  "token_placeholder": "Zadajte svoj Rováš TOKEN",
+  "start": "Štart",
+  "pause": "Pauza",
+  "stop": "Stop",
+  "alert_session_stopped": "Relácia bola manuálne zastavená. Nebol vytvorený žiadny report.",
+  "alert_missing_credentials": "Nie je možné odoslať report: Chýba Rováš API kľúč alebo token. Prosím, nastavte ich v rozšírení.",
+  "alert_timer_not_active": "Nie je možné odoslať report: časovač nebol aktívny.",
+  "alert_duration_short": "Trvanie relácie bolo príliš krátke na vytvorenie reportu do Rováša. Časovač bol resetovaný.",
+  "alert_comment_error": "Chyba pri získavaní komentára k changesetu. Report bude vytvorený s predvoleným komentárom.",
+  "alert_shareholder_error": "Nepodarilo sa overiť alebo zaregistrovať účasť na projekte Rováš. Odoslanie reportu bolo zrušené.",
+  "confirm_submit_report": "Chcete odoslať report do Rováša (ID changesetu: {id}, trvanie: {duration} minút)?",
+  "alert_report_success": "✅ Report bol úspešne odoslaný do Rováša! ID: {id}",
+  "alert_report_id_missing": "⚠️ Report bol odoslaný do Rováša, ale ID nebolo zistené v odpovedi.",
+  "alert_report_cancelled": "Odoslanie reportu do Rováša bolo zrušené. Časovač bol resetovaný.",
+  "alert_report_error": "❌ Chyba počas spracovania reportu: {error}. Časovač bol resetovaný."
 } 

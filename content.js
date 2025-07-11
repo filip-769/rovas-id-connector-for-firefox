@@ -14,6 +14,42 @@ let isPaused = false;
 let pausedDuration = 0;
 let pauseStartTime = null;
 
+// --- Localization support ---
+let translations = {};
+let userLang = 'en';
+
+async function getPreferredLanguage() {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get(['userLang'], (result) => {
+            if (result.userLang) {
+                resolve(result.userLang);
+            } else {
+                const browserLang = navigator.language.split('-')[0];
+                const supported = ['en', 'hu', 'sk'];
+                resolve(supported.includes(browserLang) ? browserLang : 'en');
+            }
+        });
+    });
+}
+
+async function loadTranslations() {
+    userLang = await getPreferredLanguage();
+    try {
+        const res = await fetch(chrome.runtime.getURL(`locales/${userLang}.json`));
+        translations = await res.json();
+    } catch (e) {
+        translations = {};
+    }
+}
+
+function t(key, vars = {}) {
+    let str = translations[key] || key;
+    Object.keys(vars).forEach(k => {
+        str = str.replace(new RegExp(`{${k}}`, 'g'), vars[k]);
+    });
+    return str;
+}
+
 // Function to load Rovas credentials from Chrome storage
 async function loadRovasCredentials() {
     return new Promise((resolve) => {
@@ -30,9 +66,10 @@ async function loadRovasCredentials() {
     });
 }
 
-// Function to create the timer badge
-function createTimerBadge() {
+// --- Patch createTimerBadge and all alerts to use translations ---
+async function createTimerBadge() {
   if (document.getElementById("rovas-timer-badge")) return;
+  await loadTranslations();
 
   const badge = document.createElement("div");
   badge.id = "rovas-timer-badge";
@@ -55,19 +92,19 @@ function createTimerBadge() {
   timerText.textContent = "🕒 0m 0s";
 
   const stopBtn = document.createElement("button");
-  stopBtn.textContent = "Stop";
+  stopBtn.textContent = t('stop');
   stopBtn.id = "rovas-stop-btn";
   stopBtn.style.cursor = "pointer";
   stopBtn.onclick = stopSession;
 
   const startBtn = document.createElement("button");
-  startBtn.textContent = "Start";
+  startBtn.textContent = t('start');
   startBtn.id = "rovas-start-btn";
   startBtn.style.cursor = "pointer";
   startBtn.onclick = startSession;
 
   const pauseBtn = document.createElement("button");
-  pauseBtn.textContent = "Pause"; 
+  pauseBtn.textContent = t('pause');
   pauseBtn.id = "rovas-pause-btn";
   pauseBtn.style.cursor = "pointer";
   pauseBtn.onclick = pauseSession;
@@ -130,7 +167,7 @@ function stopSession() {
   updateTimerText(0);
   setButtonsState('stopped');
   console.log("[ROVAS] Timer stopped.");
-  alert("Session manually stopped. No report generated.");
+  alert(t('alert_session_stopped'));
 }
 
 function updateTimerText(diffMs) {
@@ -205,7 +242,7 @@ async function checkOrCreateShareholder() {
 
     if (!ROVAS_API_KEY || !ROVAS_TOKEN) {
         console.error("[ROVAS] Cannot perform shareholder check: ROVAS API Key or Token is missing.");
-        alert("Cannot verify or register Rovas project participation: API Key or Token is missing. Please configure them in the extension popup.");
+        alert(t('alert_missing_credentials'));
         return null;
     }
 
@@ -255,7 +292,7 @@ async function checkOrCreateShareholder() {
 
     } catch (error) {
         console.error("[ROVAS] Error in checkOrCreateShareholder:", error);
-        alert(`Error verifying/adding participation in the Rovas project: ${error.message}. Check log for details.`);
+        alert(t('alert_shareholder_error'));
         return null;
     }
 }
@@ -268,7 +305,7 @@ async function sendRovasReport(changesetId) {
     // Stop if credentials are not available
     if (!ROVAS_API_KEY || !ROVAS_TOKEN) {
         console.error("[ROVAS] Cannot proceed: ROVAS API Key or Token is missing. Please configure them in the extension popup.");
-        alert("Cannot send report: ROVAS API Key or Token is missing. Please configure them in the extension popup.");
+        alert(t('alert_missing_credentials'));
         resetTimer();
         startSession();
         return;
@@ -276,7 +313,7 @@ async function sendRovasReport(changesetId) {
 
     if (!startTime) {
         console.warn("[ROVAS] Attempting to send report without timer started.");
-        alert("Unable to send report: timer was not active.");
+        alert(t('alert_timer_not_active'));
         return;
     }
 
@@ -290,7 +327,7 @@ async function sendRovasReport(changesetId) {
     const actualDurationMs = (endTime - startTime) - pausedDuration;
 
     if (actualDurationMs <= 10) {
-        alert("The session duration was too short to generate a ROVAS report. The timer has been reset.");
+        alert(t('alert_duration_short'));
         resetTimer();
         startSession();
         return;
@@ -309,7 +346,7 @@ async function sendRovasReport(changesetId) {
         });
     } catch (error) {
         console.error("[ROVAS] Error in getting the comment:", error);
-        alert("Error in getting changeset comment. Report will be created with a default comment.");
+        alert(t('alert_comment_error'));
     }
 
     // Check if the user is a shareholder of the project
@@ -318,7 +355,7 @@ async function sendRovasReport(changesetId) {
     shareholderNid = await checkOrCreateShareholder();
 
     if (!shareholderNid) {
-        alert("Could not verify or register Rovas project participation. Report submission cancelled.");
+        alert(t('alert_shareholder_error'));
         resetTimer();
         startSession();
         return;
@@ -340,7 +377,7 @@ async function sendRovasReport(changesetId) {
 
     try {
         // We ask the user for confirmation before sending the report to Rovas
-        if (confirm(`Do you want to submit the report to Rovas (Changeset ID: ${changesetId}, duration: ${(actualDurationMs / 60000).toFixed(2)} minutes)?`)) {
+        if (confirm(t('confirm_submit_report', {id: changesetId, duration: (actualDurationMs / 60000).toFixed(2)}))) {
             const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {
 //            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
                 method: "POST",
@@ -362,18 +399,18 @@ async function sendRovasReport(changesetId) {
             if (match && match[1]) {
                 const rovasReportId = match[1];
                 console.log(`%c[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`, 'color: lightgreen; font-weight: bold;');
-                alert(`✅ Report automatically submitted to ROVAS! ID: ${rovasReportId}`);
+                alert(t('alert_report_success', {id: rovasReportId}));
             } else {
                 console.warn("[ROVAS] Report submitted automatically, but Rovas ID was not found in the text response:", textResponse);
-                alert("⚠️ Report automatically transmitted to ROVAS. ID not detected in response.");
+                alert(t('alert_report_id_missing'));
             }
         } else {
             console.log("[ROVAS] Submission to Rovas cancelled by user.");
-            alert("Report submission to ROVAS cancelled. Timer has been reset.");
+            alert(t('alert_report_cancelled'));
         }
     } catch (error) {
         console.error("[ROVAS] Error during report processing:", error);
-        alert("❌ Error during report processing: " + error.message + ". Timer has been reset.");
+        alert(t('alert_report_error', {error: error.message}));
     } finally {
         resetTimer();
         startSession();
