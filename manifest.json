@@ -30,10 +30,18 @@
     }
   ],
   "background": {
-    "service_worker": "background.js"  // service worker declaration for background
+    "service_worker": "background.js"
   },
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "locales/*.json"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

@@ -74,25 +74,27 @@
   </style>
 </head>
 <body>
-  <h3>OSM iD Session Time Tracker for ROVAS</h3>
-  <p>This extension tracks the time spent working on <strong>OpenStreetMap iD</strong> and automatically submits work reports to the <strong>ROVAS App</strong>.</p>
-  <p>
-    <strong>NOTE:</strong> To use this extension, you must be a registered user in Rovas and have your <strong>API KEY</strong> and <strong>TOKEN</strong> (available on your account page). You also need to be a <strong>shareholder</strong> of the OpenStreetMap project (ID 1998).
-  </p>
-  <p>Click the button below to open the Rovas project page and get more information.</p>
-  <button id="rovasPageBtn">Open Rovas</button>
+  <h3 id="titleText"></h3>
+  <p id="noteText"></p>
+  <p id="infoText"></p>
+  <button id="rovasPageBtn"></button>
 
   <hr style="margin: 20px 0; border-color: #eee;">
 
-  <h4>ROVAS API Credentials</h4>
-  <label for="apiKey">API KEY:</label>
-  <input type="text" id="apiKey" placeholder="Enter your ROVAS API KEY">
+  <div id="tempBanner" style="display:none; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 4px; padding: 8px; margin-bottom: 10px; font-size: 13px;">
+    <span id="tempBannerText"></span>
+  </div>
 
-  <label for="token">TOKEN:</label>
-  <input type="text" id="token" placeholder="Enter your ROVAS TOKEN">
-
-  <button id="saveBtn">Save Credentials</button>
+  <h4 id="apiCredsTitle"></h4>
+  <label for="apiKey" id="apiKeyLabel"></label>
+  <input type="text" id="apiKey" placeholder="">
+  <label for="token" id="tokenLabel"></label>
+  <input type="text" id="token" placeholder="">
+  <button id="saveBtn" disabled></button>
   <p id="configStatus"></p>
+
+  <label for="langSelect" id="langLabel"></label>
+  <select id="langSelect"></select>
 
   <script src="popup.js"></script>
 </body>
