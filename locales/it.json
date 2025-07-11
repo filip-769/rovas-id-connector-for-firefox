@@ -29,5 +29,7 @@
   "lang_sk": "Slovacco",
   "lang_it": "Italiano",
   "status_credentials_saved": "Credenziali salvate con successo!",
-  "status_credentials_error": "Inserisci sia la API Key che il Token."
+  "status_credentials_error": "Inserisci sia la API Key che il Token.",
+  "temp_banner": "Le credenziali sono salvate temporaneamente. Completa entrambi i campi e clicca Salva per terminare.",
+  "temp_banner_saved": "Credenziali salvate!"
 } 

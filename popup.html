@@ -81,12 +81,16 @@
 
   <hr style="margin: 20px 0; border-color: #eee;">
 
+  <div id="tempBanner" style="display:none; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 4px; padding: 8px; margin-bottom: 10px; font-size: 13px;">
+    <span id="tempBannerText"></span>
+  </div>
+
   <h4 id="apiCredsTitle"></h4>
   <label for="apiKey" id="apiKeyLabel"></label>
   <input type="text" id="apiKey" placeholder="">
   <label for="token" id="tokenLabel"></label>
   <input type="text" id="token" placeholder="">
-  <button id="saveBtn"></button>
+  <button id="saveBtn" disabled></button>
   <p id="configStatus"></p>
 
   <label for="langSelect" id="langLabel"></label>

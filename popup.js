@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveBtn = document.getElementById('saveBtn');
     const configStatus = document.getElementById('configStatus');
     const langSelect = document.getElementById('langSelect');
+    const tempBanner = document.getElementById('tempBanner');
+    const tempBannerText = document.getElementById('tempBannerText');
 
     // Load credentials when the popup opens
     chrome.storage.sync.get(['rovasApiKey', 'rovasToken'], (result) => {
@@ -21,6 +23,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper to get translation object synchronously (from last loaded)
     let lastTranslations = {};
     function getT() { return lastTranslations; }
+
+    // Load temporary credentials from storage.local
+    function loadTempCreds() {
+        chrome.storage.local.get(['tempApiKey', 'tempToken'], (result) => {
+            if (result.tempApiKey) apiKeyInput.value = result.tempApiKey;
+            if (result.tempToken) tokenInput.value = result.tempToken;
+            updateTempState();
+        });
+    }
+
+    // Save temporary credentials to storage.local
+    function saveTempCreds() {
+        chrome.storage.local.set({ tempApiKey: apiKeyInput.value, tempToken: tokenInput.value });
+    }
+
+    // Remove temporary credentials from storage.local
+    function clearTempCreds() {
+        chrome.storage.local.remove(['tempApiKey', 'tempToken']);
+    }
+
+    // Update banner and Save button state
+    function updateTempState() {
+        const t = getT();
+        const apiKey = apiKeyInput.value.trim();
+        const token = tokenInput.value.trim();
+        const bothFilled = apiKey && token;
+        saveBtn.disabled = !bothFilled;
+        if (bothFilled) {
+            tempBanner.style.display = 'none';
+        } else if (apiKey || token) {
+            tempBanner.style.display = 'block';
+            tempBannerText.textContent = t.temp_banner || 'Credentials are temporarily saved. Complete both fields and click Save to finish.';
+        } else {
+            tempBanner.style.display = 'none';
+        }
+    }
+
+    // Listen for changes in the input fields
+    apiKeyInput.addEventListener('input', () => {
+        saveTempCreds();
+        updateTempState();
+    });
+    tokenInput.addEventListener('input', () => {
+        saveTempCreds();
+        updateTempState();
+    });
 
     // Event listener for the "Open Rovas" button
     rovasPageBtn.addEventListener('click', () => {
@@ -37,6 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 configStatus.textContent = t.status_credentials_saved || 'Credentials saved successfully!';
                 configStatus.style.color = 'green';
                 setTimeout(() => { configStatus.textContent = ''; }, 3000); // Clear message after 3 seconds
+                clearTempCreds();
+                tempBanner.style.display = 'none';
             });
         } else {
             configStatus.textContent = t.status_credentials_error || 'Please enter both API Key and Token.';
@@ -97,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('langLabel').textContent = t.language_label;
         populateLanguageSelector(langSelect.value, t, locales);
         lastTranslations = t;
+        updateTempState();
     }
 
     langSelect.addEventListener('change', () => {
@@ -114,4 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(t => updateUIText(t, locales));
     });
+
+    // On popup open, load temp creds and update state
+    loadTempCreds();
 });

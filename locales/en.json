@@ -28,5 +28,7 @@
   "lang_hu": "Hungarian",
   "lang_sk": "Slovak",
   "status_credentials_saved": "Credentials saved successfully!",
-  "status_credentials_error": "Please enter both API Key and Token."
+  "status_credentials_error": "Please enter both API Key and Token.",
+  "temp_banner": "Credentials are temporarily saved. Complete both fields and click Save to finish.",
+  "temp_banner_saved": "Credentials saved!"
 } 

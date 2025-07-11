@@ -28,5 +28,7 @@
   "lang_hu": "Maďarsky",
   "lang_sk": "Slovensky",
   "status_credentials_saved": "Prihlasovacie údaje boli úspešne uložené!",
-  "status_credentials_error": "Zadajte prosím API kľúč aj token."
+  "status_credentials_error": "Zadajte prosím API kľúč aj token.",
+  "temp_banner": "Prihlasovacie údaje sú dočasne uložené. Vyplňte obe polia a kliknite na Uložiť na dokončenie.",
+  "temp_banner_saved": "Prihlasovacie údaje boli uložené!"
 } 
