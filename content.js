@@ -261,6 +261,7 @@ async function checkOrCreateShareholder() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json",
                 "API-KEY": ROVAS_API_KEY, // Uses the loaded key
                 "TOKEN": ROVAS_TOKEN      // Uses the loaded token
             },
@@ -406,6 +407,7 @@ async function sendRovasReport(changesetId) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Accept": "application/json"
                     "API-KEY": ROVAS_API_KEY, // Uses the loaded key
                     "TOKEN": ROVAS_TOKEN      // Uses the loaded token
                 },
@@ -466,6 +468,7 @@ async function chargeUsageFee(wrId, laborHours) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json",
                 "API-KEY": ROVAS_API_KEY,
                 "TOKEN": ROVAS_TOKEN
             },
