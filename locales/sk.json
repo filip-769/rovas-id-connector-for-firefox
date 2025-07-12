@@ -2,7 +2,7 @@
   "title": "Reportovanie práce vykonanej v OSM iD do Rováša",
   "note": "POZNÁMKA: Na používanie tohto rozšírenia musíte byť registrovaným používateľom v Rováši a mať svoj API KĽÚČ a TOKEN (dostupné na stránke vášho účtu).",
   "info": "Kliknutím na tlačidlo nižšie otvoríte projekt OpenStreetMap v Rováši.",
-  "open_rovas": "Otvoriť Rovas",
+  "open_rovas": "Otvoriť Rováš",
   "api_creds_title": "Rováš API údaje na prihlásenie",
   "api_key_label": "API KĽÚČ:",
   "token_label": "TOKEN:",

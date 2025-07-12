@@ -409,7 +409,7 @@ async function sendRovasReport(changesetId) {
                 alert(t('alert_report_success', {id: rovasReportId}));
 
                 // Charge usage fee after successful work report submission
-                chargeUsageFee(rovasReportId);
+                chargeUsageFee(rovasReportId, (actualDurationMs / 3600000).toFixed(2));
 
             } else {
                 console.warn("[ROVAS] Report submitted automatically, but Rovas ID was not found in the text response:", textResponse);
@@ -429,13 +429,17 @@ async function sendRovasReport(changesetId) {
 }
 
 // --- Function to charge usage fee after successful work report ---
-async function chargeUsageFee(wrId) {
+async function chargeUsageFee(wrId, laborHours) {
     console.log(`%c[ROVAS] Charging usage fee for work report ID: ${wrId}`, 'color: #FFD700; font-weight: bold;');
+    
+    // Calculate usage fee: 3% of (labor time * 10)
+    const laborValue = laborHours * 10;
+    const usageFee = laborValue * 0.03;
     
     const feePayload = {
         project_id: 1998, // OpenStreetMap project ID
         wr_id: wrId,
-        usage_fee: 3.0,
+        usage_fee: usageFee,
         note: "3% usage fee, levied by the 'Rovas Connector for ID' project"
     };
 
@@ -458,7 +462,7 @@ async function chargeUsageFee(wrId) {
             return false;
         }
 
-        console.log(`%c[ROVAS] Usage fee charged successfully for work report ID: ${wrId}`, 'color: #00FF7F; font-weight: bold;');
+        console.log(`%c[ROVAS] Usage fee charged successfully for work report ID: ${wrId} (fee: ${usageFee.toFixed(2)})`, 'color: #00FF7F; font-weight: bold;');
         return true;
     } catch (error) {
         console.error("[ROVAS] Error charging usage fee:", error);
