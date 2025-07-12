@@ -274,6 +274,13 @@ async function checkOrCreateShareholder() {
             throw new Error(`Server error ${response.status}: ${textResponse}`);
         }
 
+        // Check for invalid API keys response.
+        if (textResponse.includes("The API keys sent are invalid")) {
+            console.error("[ROVAS] Invalid API keys detected:", textResponse);
+            alert(t('alert_invalid_credentials'));
+            return null;
+        }
+
         // We wait for an answer like "result: [ID]"
         const match = textResponse.match(/result:\s*(\d+)/);
         if (match && match[1]) {
