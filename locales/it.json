@@ -1,7 +1,7 @@
 {
-  "title": "Tracciatore di tempo sessione OSM iD per ROVAS",
+  "title": "Time tracker per le sessioni Openstreetmap su iD per ROVAS",
   "note": "NOTA: Per utilizzare questa estensione, devi essere un utente registrato su Rovas e avere la tua API KEY e TOKEN (disponibili nella pagina del tuo account). Devi anche essere azionista del progetto OpenStreetMap (ID 1998).",
-  "info": "Cliccando il pulsante qui sotto si apre il progetto OpenStreetMap su Rovas.",
+  "info": "Clicca il pulsante qui sotto per aprire il progetto OpenStreetMap su Rovas.",
   "open_rovas": "Apri Rovas",
   "api_creds_title": "Credenziali API ROVAS",
   "api_key_label": "API KEY:",
@@ -31,5 +31,8 @@
   "status_credentials_saved": "Credenziali salvate con successo!",
   "status_credentials_error": "Inserisci sia la API Key che il Token.",
   "temp_banner": "Le credenziali sono salvate temporaneamente. Completa entrambi i campi e clicca Salva per terminare.",
-  "temp_banner_saved": "Credenziali salvate!"
+  "temp_banner_saved": "Credenziali salvate!",
+  "fee_text": "Per ricompensare gli autori di questo plugin Rovas Connector, verrà applicata una commissione pari al 3% dell'importo guadagnato dai report creati dal plugin.",
+  "company_work_checkbox": "Non sono pagato da un'azienda per il lavoro effettuato su OpenStreetMap iD",
+  "status_company_work_error": "Non è permesso usare questo plugin se si è pagati da un'azienda per il lavoro effettuato su iD."
 } 

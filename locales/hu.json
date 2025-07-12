@@ -27,8 +27,12 @@
   "lang_en": "Angol",
   "lang_hu": "Magyar",
   "lang_sk": "Szlovák",
+  "lang_it": "Olasz",
   "status_credentials_saved": "Hitelesítő adatok sikeresen elmentve!",
   "status_credentials_error": "Kérlek, add meg mind az API kulcsot, mind a tokent.",
   "temp_banner": "A hitelesítő adatok ideiglenesen elmentve. Töltsd ki mindkét mezőt, majd kattints a Mentés gombra a véglegesítéshez.",
-  "temp_banner_saved": "Hitelesítő adatok elmentve!"
+  "temp_banner_saved": "Hitelesítő adatok elmentve!",
+  "fee_text": "A Rovas Connector Plugin szerzőinek jutalmazására a plugin által generált jelentésekből szerzett összeg 3%-ának megfelelő díj kerül levonásra ebből a bevételből.",
+  "company_work_checkbox": "Nem kapok fizetést OpenStreetMap iD munkámért cégtől",
+  "status_company_work_error": "Ezt a bővítményt tilos használni, ha egy cég fizet az iD-n végzett munkádért."
 } 

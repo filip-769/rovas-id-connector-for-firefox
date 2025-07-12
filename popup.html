@@ -6,7 +6,7 @@
     body {
       font-family: sans-serif;
       padding: 15px;
-      width: 280px;
+      width: 440px;
       line-height: 1.4;
       color: #333;
     }
@@ -71,6 +71,32 @@
       font-size: 12px;
       color: green;
     }
+	.license-text { /* New style for the license text */
+        font-size: 11px;
+        color: #555;
+        margin-bottom: 15px;
+        line-height: 1.6;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    .checkbox-container { /* New style for the checkbox container */
+        margin-bottom: 12px;
+        display: flex;
+        align-items: flex-start; /* Aligns text and checkbox at the top */
+        font-size: 10px;
+        color: #444;
+    }
+    .checkbox-container input[type="checkbox"] {
+        margin-top: 3px; /* Aligns the checkbox better with text */
+        margin-right: 8px;
+        flex-shrink: 0; /* Prevents the checkbox from shrinking */
+    }
+    #saveBtn:disabled { /* Style for disabled save button */
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -79,18 +105,26 @@
   <p id="infoText"></p>
   <button id="rovasPageBtn"></button>
 
-  <hr style="margin: 20px 0; border-color: #eee;">
-
   <div id="tempBanner" style="display:none; background: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 4px; padding: 8px; margin-bottom: 10px; font-size: 13px;">
-    <span id="tempBannerText"></span>
-  </div>
+    <span id="tempBannerText"></span>
+  </div>
+
+  <p class="license-text" id="feeText"></p>
+
+  <hr style="margin: 20px 0; border-color: #eee;">
 
   <h4 id="apiCredsTitle"></h4>
   <label for="apiKey" id="apiKeyLabel"></label>
   <input type="text" id="apiKey" placeholder="">
   <label for="token" id="tokenLabel"></label>
   <input type="text" id="token" placeholder="">
-  <button id="saveBtn" disabled></button>
+  
+  <div class="checkbox-container">
+    <input type="checkbox" id="companyWorkCheckbox">
+    <label for="companyWorkCheckbox" id="companyWorkLabel"></label>
+  </div>
+  
+    <button id="saveBtn" disabled></button>
   <p id="configStatus"></p>
 
   <label for="langSelect" id="langLabel"></label>

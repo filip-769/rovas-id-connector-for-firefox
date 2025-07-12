@@ -9,15 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const langSelect = document.getElementById('langSelect');
     const tempBanner = document.getElementById('tempBanner');
     const tempBannerText = document.getElementById('tempBannerText');
+	const feeText = document.getElementById('feeText');
+    const companyWorkCheckbox = document.getElementById('companyWorkCheckbox');
+    const companyWorkLabel = document.getElementById('companyWorkLabel');
 
     // Load credentials when the popup opens
-    chrome.storage.sync.get(['rovasApiKey', 'rovasToken'], (result) => {
+    chrome.storage.sync.get(['rovasApiKey', 'rovasToken', 'isCompanyWork'], (result) => { // added checkbox
         if (result.rovasApiKey) {
             apiKeyInput.value = result.rovasApiKey;
         }
         if (result.rovasToken) {
             tokenInput.value = result.rovasToken;
         }
+		companyWorkCheckbox.checked = result.isCompanyWork !== undefined ? result.isCompanyWork : false;
     });
 
     // Helper to get translation object synchronously (from last loaded)
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const apiKey = apiKeyInput.value.trim();
         const token = tokenInput.value.trim();
         const bothFilled = apiKey && token;
-        saveBtn.disabled = !bothFilled;
+                saveBtn.disabled = !(bothFilled && companyWorkCheckbox.checked); // Disabled if "not paid work" is unchecked, otherwise enabled if fields are filled
         if (bothFilled) {
             tempBanner.style.display = 'none';
         } else if (apiKey || token) {
@@ -79,7 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     saveBtn.addEventListener('click', () => {
         const apiKey = apiKeyInput.value.trim();
         const token = tokenInput.value.trim();
-        const t = getT();
+        const t = getT();	
+		
         if (apiKey && token) {
             chrome.storage.sync.set({ rovasApiKey: apiKey, rovasToken: token }, () => {
                 configStatus.textContent = t.status_credentials_saved || 'Credentials saved successfully!';
@@ -92,6 +97,25 @@ document.addEventListener('DOMContentLoaded', () => {
             configStatus.textContent = t.status_credentials_error || 'Please enter both API Key and Token.';
             configStatus.style.color = 'red';
         }
+    });
+
+	// event listener for checkbox
+    companyWorkCheckbox.addEventListener('change', () => {
+        chrome.storage.sync.set({ isCompanyWork: companyWorkCheckbox.checked }, () => {
+        });
+
+        const t = getT(); // translations 
+        if (!companyWorkCheckbox.checked) {
+            // if not checked, it means the user is paid
+            configStatus.textContent = t.status_company_work_error || 'This plugin is not allowed for use if you are paid by a company for work performed on iD.';
+            configStatus.style.color = 'red';
+        } else {
+            // If checked, the user is a volunteer
+            configStatus.textContent = ''; 
+            configStatus.style.color = 'green'; 
+        }
+
+        updateTempState(); 
     });
 
     // Helper to get available locales from manifest
@@ -138,12 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('noteText').textContent = t.note;
         document.getElementById('infoText').textContent = t.info;
         document.getElementById('rovasPageBtn').textContent = t.open_rovas;
+		feeText.textContent = t.fee_text;
         document.getElementById('apiCredsTitle').textContent = t.api_creds_title;
         document.getElementById('apiKeyLabel').textContent = t.api_key_label;
         document.getElementById('tokenLabel').textContent = t.token_label;
         document.getElementById('saveBtn').textContent = t.save;
         document.getElementById('apiKey').placeholder = t.api_key_placeholder;
         document.getElementById('token').placeholder = t.token_placeholder;
+		companyWorkLabel.textContent = t.company_work_checkbox; // SET THE CHECKBOX LABEL TEXT
         document.getElementById('langLabel').textContent = t.language_label;
         populateLanguageSelector(langSelect.value, t, locales);
         lastTranslations = t;

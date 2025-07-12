@@ -27,8 +27,12 @@
   "lang_en": "Anglicky",
   "lang_hu": "Maďarsky",
   "lang_sk": "Slovensky",
+  "lang_it": "Taliansky",
   "status_credentials_saved": "Prihlasovacie údaje boli úspešne uložené!",
   "status_credentials_error": "Zadajte prosím API kľúč aj token.",
   "temp_banner": "Prihlasovacie údaje sú dočasne uložené. Vyplňte obe polia a kliknite na Uložiť na dokončenie.",
-  "temp_banner_saved": "Prihlasovacie údaje boli uložené!"
+  "temp_banner_saved": "Prihlasovacie údaje boli uložené!",
+  "fee_text": "Na odmenu autorov tohto doplnku Rovas Connector bude z príjmov z hlásení vytvorených týmto doplnkom strhnutý poplatok vo výške 3% zo získanej sumy.",
+  "company_work_checkbox": "Nie som platený spoločnosťou za prácu na OpenStreetMap iD",
+  "status_company_work_error": "Tento doplnok nie je povolené používať, ak ste platení spoločnosťou za prácu vykonanú na iD."
 } 
