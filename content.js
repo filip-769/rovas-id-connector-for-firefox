@@ -274,6 +274,9 @@ async function checkOrCreateShareholder() {
             throw new Error(`Server error ${response.status}: ${textResponse}`);
         }
 
+        // Debug: Log the actual response
+        console.log(`%c[ROVAS] Shareholder check response: "${textResponse}"`, 'color: #FFA500; font-weight: bold;');
+
         // Check for invalid API keys response.
         if (textResponse.includes("The API keys sent are invalid")) {
             console.error("[ROVAS] Invalid API keys detected:", textResponse);
@@ -281,10 +284,23 @@ async function checkOrCreateShareholder() {
             return null;
         }
 
-        // We wait for an answer like "result: [ID]"
-        const match = textResponse.match(/result:\s*(\d+)/);
-        if (match && match[1]) {
-            const shareholderNid = match[1];
+        // Parse response as JSON (new format) or fallback to text parsing (old format)
+        let shareholderNid = null;
+        try {
+            // Try to parse as JSON first
+            const jsonResponse = JSON.parse(textResponse);
+            if (jsonResponse.result) {
+                shareholderNid = jsonResponse.result;
+            }
+        } catch (e) {
+            // If JSON parsing fails, try the old text format
+            const match = textResponse.match(/result:\s*(\d+)/);
+            if (match && match[1]) {
+                shareholderNid = match[1];
+            }
+        }
+
+        if (shareholderNid) {
             if (parseInt(shareholderNid, 10) > 0) {
                 console.log(`%c[ROVAS] OpenStreetMap project shareholding (Shareholder NID): ${shareholderNid} confirmed.`, 'color: #00FF7F; font-weight: bold;');
                 return shareholderNid;
@@ -434,7 +450,8 @@ async function chargeUsageFee(wrId, laborHours) {
     
     // Calculate usage fee: 3% of (labor time * 10)
     const laborValue = laborHours * 10;
-    const usageFee = laborValue * 0.03;
+    const usageFee = Number((laborValue * 0.03).toFixed(2));
+
     
     const feePayload = {
         project_id: 1998, // OpenStreetMap project ID
