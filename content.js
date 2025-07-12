@@ -71,6 +71,13 @@ async function createTimerBadge() {
   if (document.getElementById("rovas-timer-badge")) return;
   await loadTranslations();
 
+  // Check if credentials are available before creating the badge
+  await loadRovasCredentials();
+  if (!ROVAS_API_KEY || !ROVAS_TOKEN) {
+    console.log("[ROVAS] No API credentials found. Timer badge not created.");
+    return;
+  }
+
   const badge = document.createElement("div");
   badge.id = "rovas-timer-badge";
   badge.style.position = "fixed";
@@ -256,11 +263,12 @@ async function checkOrCreateShareholder() {
     };
 
     try {
-        const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", {
-//        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
+//        const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", {
+        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_check_or_add_shareholder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json",
                 "API-KEY": ROVAS_API_KEY, // Uses the loaded key
                 "TOKEN": ROVAS_TOKEN      // Uses the loaded token
             },
@@ -274,6 +282,9 @@ async function checkOrCreateShareholder() {
             throw new Error(`Server error ${response.status}: ${textResponse}`);
         }
 
+        // Debug: Log the actual response
+        console.log(`%c[ROVAS] Shareholder check response: "${textResponse}"`, 'color: #FFA500; font-weight: bold;');
+
         // Check for invalid API keys response.
         if (textResponse.includes("The API keys sent are invalid")) {
             console.error("[ROVAS] Invalid API keys detected:", textResponse);
@@ -281,10 +292,23 @@ async function checkOrCreateShareholder() {
             return null;
         }
 
-        // We wait for an answer like "result: [ID]"
-        const match = textResponse.match(/result:\s*(\d+)/);
-        if (match && match[1]) {
-            const shareholderNid = match[1];
+        // Parse response as JSON (new format) or fallback to text parsing (old format)
+        let shareholderNid = null;
+        try {
+            // Try to parse as JSON first
+            const jsonResponse = JSON.parse(textResponse);
+            if (jsonResponse.result) {
+                shareholderNid = jsonResponse.result;
+            }
+        } catch (e) {
+            // If JSON parsing fails, try the old text format
+            const match = textResponse.match(/result:\s*(\d+)/);
+            if (match && match[1]) {
+                shareholderNid = match[1];
+            }
+        }
+
+        if (shareholderNid) {
             if (parseInt(shareholderNid, 10) > 0) {
                 console.log(`%c[ROVAS] OpenStreetMap project shareholding (Shareholder NID): ${shareholderNid} confirmed.`, 'color: #00FF7F; font-weight: bold;');
                 return shareholderNid;
@@ -385,11 +409,12 @@ async function sendRovasReport(changesetId) {
     try {
         // We ask the user for confirmation before sending the report to Rovas
         if (confirm(t('confirm_submit_report', {id: changesetId, duration: (actualDurationMs / 60000).toFixed(2)}))) {
-            const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {
-//            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
+//            const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {
+            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Accept": "application/json",
                     "API-KEY": ROVAS_API_KEY, // Uses the loaded key
                     "TOKEN": ROVAS_TOKEN      // Uses the loaded token
                 },
@@ -402,19 +427,23 @@ async function sendRovasReport(changesetId) {
                 throw new Error(`Server error ${response.status}: ${textResponse}`);
             }
 
-            const match = textResponse.match(/created_wr_nid:\s*(\d+)/);
-            if (match && match[1]) {
-                const rovasReportId = match[1];
-                console.log(`%c[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`, 'color: lightgreen; font-weight: bold;');
+            let rovasReportId;
+            try {
+                const parsed = JSON.parse(textResponse);
+                rovasReportId = parsed.created_wr_nid;
+            } catch (e) {
+                console.warn("[ROVAS] Failed to parse JSON response:", e, textResponse);
+            }
+
+            if (rovasReportId) {
+                console.log(`[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`);
                 alert(t('alert_report_success', {id: rovasReportId}));
-
-                // Charge usage fee after successful work report submission
                 chargeUsageFee(rovasReportId, (actualDurationMs / 3600000).toFixed(2));
-
             } else {
                 console.warn("[ROVAS] Report submitted automatically, but Rovas ID was not found in the text response:", textResponse);
                 alert(t('alert_report_id_missing'));
             }
+
         } else {
             console.log("[ROVAS] Submission to Rovas cancelled by user.");
             alert(t('alert_report_cancelled'));
@@ -434,7 +463,8 @@ async function chargeUsageFee(wrId, laborHours) {
     
     // Calculate usage fee: 3% of (labor time * 10)
     const laborValue = laborHours * 10;
-    const usageFee = laborValue * 0.03;
+    const usageFee = Number((laborValue * 0.03).toFixed(2));
+
     
     const feePayload = {
         project_id: 1998, // OpenStreetMap project ID
@@ -444,11 +474,12 @@ async function chargeUsageFee(wrId, laborHours) {
     };
 
     try {
-        const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_aur", {
-//        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_aur", { // ACTIVATE THIS FOR PRODUCTION ENVIRONMENT AND COMMENT THE LINE BEFORE (DEV)
+//        const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_aur", {
+        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_aur", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json",
                 "API-KEY": ROVAS_API_KEY,
                 "TOKEN": ROVAS_TOKEN
             },
@@ -494,6 +525,14 @@ chrome.storage.onChanged.addListener((changes, area) => {
     const badge = document.getElementById("rovas-timer-badge");
     if (badge) badge.remove();
     // Recreate the badge with the new language
+    createTimerBadge();
+  }
+  
+  // Listen for credential changes and show/hide timer badge
+  if (area === 'sync' && (changes.rovasApiKey || changes.rovasToken)) {
+    const badge = document.getElementById("rovas-timer-badge");
+    if (badge) badge.remove();
+    // Recreate the badge to check if credentials are now available
     createTimerBadge();
   }
 });
