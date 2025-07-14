@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTempState(); 
     });
 
-    // Helper to get available locales from manifest
+    // Helper to get available locales from languages manifest
     async function getAvailableLocales() {
         try {
-            const res = await fetch(chrome.runtime.getURL('locales/manifest.json'));
+            const res = await fetch(chrome.runtime.getURL('locales/languages.json'));
             const manifest = await res.json();
             if (manifest && Array.isArray(manifest.locales)) {
                 return manifest.locales;
