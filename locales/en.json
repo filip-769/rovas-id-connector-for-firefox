@@ -33,6 +33,6 @@
   "temp_banner": "Credentials are temporarily saved. Complete both fields and click Save to finish.",
   "temp_banner_saved": "Credentials saved!",
   "fee_text": "To reward the authors of this Rovas Connector Plugin, a fee equal to 3% of the amount you earn from reports created by the plugin will be levied on those earnings.",
-  "company_work_checkbox": "I am not paid for OpenStreetMap iD work by a company",
+  "company_work_checkbox": "I am not paid for my work on OpenStreetMap by a company",
   "status_company_work_error": "This plugin is not allowed for use if you are paid by a company for work performed on iD."
 } 
