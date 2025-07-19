@@ -35,6 +35,9 @@
       border-radius: 4px;
       box-sizing: border-box; /* Include padding and border in the element's total width and height */
     }
+    input[type=password] {
+      width: 100%;
+    }
     button {
       background-color: #28a745;
       color: white;
@@ -115,9 +118,9 @@
 
   <h4 id="apiCredsTitle"></h4>
   <label for="apiKey" id="apiKeyLabel"></label>
-  <input type="text" id="apiKey" placeholder="">
+  <input type="password" id="apiKey" placeholder="">
   <label for="token" id="tokenLabel"></label>
-  <input type="text" id="token" placeholder="">
+  <input type="password" id="token" placeholder="">
   
   <div class="checkbox-container">
     <input type="checkbox" id="companyWorkCheckbox">
