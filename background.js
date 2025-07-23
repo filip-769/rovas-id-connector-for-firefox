@@ -17,7 +17,12 @@ chrome.webRequest.onCompleted.addListener(
 
       // Send changeset ID to the content script 
       chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        if (tabs[0] && tabs[0].url.startsWith("https://www.openstreetmap.org/edit")) {
+        if (
+		  tabs[0] &&
+		  (tabs[0].url.startsWith("https://www.openstreetmap.org/edit") ||
+		  tabs[0].url.startsWith("https://rapideditor.org/edit"))
+		) {
+
           // Sends only if active tab is ID editor 
           chrome.tabs.sendMessage(tabs[0].id, {
             type: "CHANGESET_ID_DETECTED",

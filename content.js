@@ -538,6 +538,14 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 // We start the badge again after the report sending is done
-if (window.location.href.includes("/edit")) {
+const url = new URL(window.location.href);
+const host = url.hostname;
+const pathname = url.pathname;
+
+const isOSEditor = host === "www.openstreetmap.org" && pathname === "/edit";
+const isRapidStandalone = host === "rapideditor.org" && pathname === "/edit";
+
+if (isOSEditor || isRapidStandalone) {
   createTimerBadge();
 }
+
