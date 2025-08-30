@@ -1,49 +1,53 @@
 {
-  "manifest_version": 3,
-  "name": "ROVAS Connector for iD Editor",
-  "version": "1.5",
-  "description": "Tracks editing session in Openstreetmap iD and sends working reports to ROVAS App.",
-  "permissions": [
-    "storage",
-    "webRequest"  
-  ],
-  "host_permissions": [
-    "https://www.openstreetmap.org/edit*",
-    "https://api.openstreetmap.org/*",  
-    "https://dev.rovas.app/*",         
-    "https://overpass-api.de/*",       
-    "https://neofund.sk/*",
-    "https://rapideditor.org/edit*"	
-  ],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png"
-    }
-  },
-  "content_scripts": [
-    {
-      "matches": [
-	    "https://www.openstreetmap.org/edit*",
-		"https://rapideditor.org/edit*"
-	  ],
-      "js": ["content.js"]
-    }
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": [
+    "manifest_version": 2,
+    "name": "ROVAS Connector for iD Editor",
+    "version": "1.5",
+    "description": "Tracks editing session in Openstreetmap iD and sends working reports to ROVAS App. Firefox fork of Chrome extension by dp7x.",
+    "permissions": [
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "https://www.openstreetmap.org/edit*",
+        "https://api.openstreetmap.org/*",
+        "https://rovas.app/*",
+        "https://dev.rovas.app/*",
+        "https://overpass-api.de/*",
+        "https://neofund.sk/*",
+        "https://rapideditor.org/edit*"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon16.png",
+            "48": "icon48.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.openstreetmap.org/edit*",
+                "https://rapideditor.org/edit*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png"
+    },
+    "web_accessible_resources": [
         "locales/*.json"
-      ],
-      "matches": ["<all_urls>"]
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{03ba7026-0948-496b-9d9c-fb35273f3ae7}"
+        }
     }
-  ]
 }

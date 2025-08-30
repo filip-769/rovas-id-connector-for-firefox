@@ -35,3 +35,23 @@ chrome.webRequest.onCompleted.addListener(
   // Filters only URLs of OSM API that we are interested to control
   { urls: ["https://api.openstreetmap.org/api/0.6/changeset/*"] }
 );
+
+// fork code below
+
+browser.webRequest.onHeadersReceived.addListener(
+    details => {
+        const headers = details.responseHeaders || [];
+        for (const header of headers) {
+            if (header.name.toLowerCase() === "content-security-policy") {
+                header.value = header.value.replace(
+                    "connect-src",
+                    "connect-src https://dev.rovas.app https://rovas.app https://api.openstreetmap.org"
+                );
+                break;
+            }
+        }
+        return { responseHeaders: headers };
+    },
+    { urls: ["https://www.openstreetmap.org/edit*", "https://rapideditor.org/edit*"] },
+    ["blocking", "responseHeaders"]
+);
