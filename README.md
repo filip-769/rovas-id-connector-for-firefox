@@ -1,4 +1,4 @@
-## **ROVAS Connector for OpenStreetMap iD Editor - Firefox fork**
+## **ROVAS Connector for OpenStreetMap iD Editor for Firefox (fork of Chrome extension)**
 
 This is a Firefox fork of https://github.com/dp7x/rovas-id-timetracker.
 

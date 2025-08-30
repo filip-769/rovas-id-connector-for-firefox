@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "ROVAS Connector for iD Editor - Firefox fork",
+    "name": "ROVAS Connector for iD Editor for Firefox (fork of Chrome extension)",
     "version": "1.5",
     "description": "Tracks editing session in Openstreetmap iD and sends working reports to ROVAS App. Firefox fork of Chrome extension by dp7x.",
     "permissions": [
