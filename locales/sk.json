@@ -32,7 +32,6 @@
   "status_credentials_error": "Zadajte prosím API kľúč aj token.",
   "temp_banner": "Prihlasovacie údaje sú dočasne uložené. Vyplňte obe polia a kliknite na Uložiť na dokončenie.",
   "temp_banner_saved": "Prihlasovacie údaje boli uložené!",
-  "fee_text": "Na odmenu autorov tohto doplnku Rovas Connector bude strhnutý poplatok vo výške 3% z odmeny za každý výkaz.",
   "company_work_checkbox": "Za svoju prácu na OpenStreetMap nedostávam zaplatené od žiadnej spoločnosti.",
   "status_company_work_error": "Tento doplnok nie je povolené používať, ak vás za prácu vykonanú s OpenStreetMap ID platí nejaká spoločnosť."
 } 

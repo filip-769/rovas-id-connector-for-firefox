@@ -438,7 +438,6 @@ async function sendRovasReport(changesetId) {
             if (rovasReportId) {
                 console.log(`[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`);
                 alert(t('alert_report_success', {id: rovasReportId}));
-                chargeUsageFee(rovasReportId, (actualDurationMs / 3600000).toFixed(2));
             } else {
                 console.warn("[ROVAS] Report submitted automatically, but Rovas ID was not found in the text response:", textResponse);
                 alert(t('alert_report_id_missing'));
@@ -454,50 +453,6 @@ async function sendRovasReport(changesetId) {
     } finally {
         resetTimer();
         startSession();
-    }
-}
-
-// --- Function to charge usage fee after successful work report ---
-async function chargeUsageFee(wrId, laborHours) {
-    console.log(`%c[ROVAS] Charging usage fee for work report ID: ${wrId}`, 'color: #FFD700; font-weight: bold;');
-    
-    // Calculate usage fee: 3% of (labor time * 10)
-    const laborValue = laborHours * 10;
-    const usageFee = Number((laborValue * 0.03).toFixed(2));
-
-    
-    const feePayload = {
-        project_id: 429681, // project "Rovas Connector for ID"
-        wr_id: wrId,
-        usage_fee: usageFee,
-        note: "3% usage fee, levied by the 'Rovas Connector for ID' project"
-    };
-
-    try {
-//        const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_aur", {
-        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_aur", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "API-KEY": ROVAS_API_KEY,
-                "TOKEN": ROVAS_TOKEN
-            },
-            body: JSON.stringify(feePayload)
-        });
-
-        const textResponse = await response.text();
-
-        if (!response.ok) {
-            console.warn(`[ROVAS] Usage fee charge failed with status ${response.status}: ${textResponse}`);
-            return false;
-        }
-
-        console.log(`%c[ROVAS] Usage fee charged successfully for work report ID: ${wrId} (fee: ${usageFee.toFixed(2)})`, 'color: #00FF7F; font-weight: bold;');
-        return true;
-    } catch (error) {
-        console.error("[ROVAS] Error charging usage fee:", error);
-        return false;
     }
 }
 

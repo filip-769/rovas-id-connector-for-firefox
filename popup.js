@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const langSelect = document.getElementById('langSelect');
     const tempBanner = document.getElementById('tempBanner');
     const tempBannerText = document.getElementById('tempBannerText');
-	const feeText = document.getElementById('feeText');
     const companyWorkCheckbox = document.getElementById('companyWorkCheckbox');
     const companyWorkLabel = document.getElementById('companyWorkLabel');
 
@@ -162,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('noteText').textContent = t.note;
         document.getElementById('infoText').textContent = t.info;
         document.getElementById('rovasPageBtn').textContent = t.open_rovas;
-		feeText.textContent = t.fee_text;
         document.getElementById('apiCredsTitle').textContent = t.api_creds_title;
         document.getElementById('apiKeyLabel').textContent = t.api_key_label;
         document.getElementById('tokenLabel').textContent = t.token_label;
