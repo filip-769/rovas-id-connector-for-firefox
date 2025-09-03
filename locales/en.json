@@ -34,5 +34,8 @@
   "temp_banner_saved": "Credentials saved!",
   "fee_text": "To reward the authors of this Rovas Connector Plugin, a fee equal to 3% of the amount you earn from reports created by the plugin will be levied on those earnings.",
   "company_work_checkbox": "I am not paid for my work on OpenStreetMap by a company",
-  "status_company_work_error": "This plugin is not allowed for use if you are paid by a company for work performed on iD."
+  "status_company_work_error": "This plugin is not allowed for use if you are paid by a company for work performed on iD.",
+  "confirm_submit_report_prompt": "Are you sure you want to submit a work report for changeset {id}? The calculated duration is {duration_hms} ({duration_decimal} decimal minutes). You can enter a lower value to modify the duration before submitting:"
+  "alert_invalid_duration": "Invalid duration. Please enter a positive number.",
+  "alert_duration_too_high": "The entered duration cannot be higher than the calculated time."
 } 

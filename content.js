@@ -356,13 +356,19 @@ async function sendRovasReport(changesetId) {
 
     const endTime = new Date();
     const actualDurationMs = (endTime - startTime) - pausedDuration;
+    const initialMinutes = (actualDurationMs / 60000).toFixed(2);
+    const totalSeconds = Math.floor(actualDurationMs / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const initialFormattedDuration = `${hours}h ${minutes}m ${seconds}s`;
 
     if (actualDurationMs <= 10) {
         alert(t('alert_duration_short'));
         resetTimer();
         startSession();
         return;
-    }
+    }	
 
     console.log(`%c[ROVAS] Detected ID ${changesetId}, preparing for automatic upload. Effective duration: ${actualDurationMs}ms`, 'color: #FFA500; font-weight: bold;');
 
@@ -403,51 +409,83 @@ async function sendRovasReport(changesetId) {
         access_token: Math.random().toString(36).substring(2, 18),
         publish_status: 1
     };
-
-    const jsonStr = JSON.stringify(rovasPayload, null, 2);
+    
+    // Non serve convertire in JSON qui
 
     try {
-        // We ask the user for confirmation before sending the report to Rovas
-        if (confirm(t('confirm_submit_report', {id: changesetId, duration: (actualDurationMs / 60000).toFixed(2)}))) {
-//            const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {
-            const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "API-KEY": ROVAS_API_KEY, // Uses the loaded key
-                    "TOKEN": ROVAS_TOKEN      // Uses the loaded token
-                },
-                body: jsonStr // sends the json string
-            });
+        let userMinutes = null;
+        let validInput = false;
 
-            const textResponse = await response.text();
+        // Loop per costringere l'utente a inserire un valore valido o annullare
+        while (!validInput) {
+            const userConfirmation = prompt(
+                t('confirm_submit_report_prompt', {
+                    id: changesetId,
+                    duration_hms: initialFormattedDuration,
+					duration_decimal: initialMinutes
+                }),
+                userMinutes !== null ? userMinutes : initialMinutes
+            );
 
-            if (!response.ok) {
-                throw new Error(`Server error ${response.status}: ${textResponse}`);
+            if (userConfirmation === null) {
+                console.log("[ROVAS] Submission to Rovas cancelled by user.");
+                alert(t('alert_report_cancelled'));
+                resetTimer();
+                startSession();
+                return;
             }
 
-            let rovasReportId;
-            try {
-                const parsed = JSON.parse(textResponse);
-                rovasReportId = parsed.created_wr_nid;
-            } catch (e) {
-                console.warn("[ROVAS] Failed to parse JSON response:", e, textResponse);
-            }
+            userMinutes = parseFloat(userConfirmation);
 
-            if (rovasReportId) {
-                console.log(`[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`);
-                alert(t('alert_report_success', {id: rovasReportId}));
-                chargeUsageFee(rovasReportId, (actualDurationMs / 3600000).toFixed(2));
+            if (isNaN(userMinutes) || userMinutes <= 0) {
+                alert(t('alert_invalid_duration'));
+            } else if (userMinutes > initialMinutes) {
+                alert(t('alert_duration_too_high'));
             } else {
-                console.warn("[ROVAS] Report submitted automatically, but Rovas ID was not found in the text response:", textResponse);
-                alert(t('alert_report_id_missing'));
+                validInput = true;
             }
-
-        } else {
-            console.log("[ROVAS] Submission to Rovas cancelled by user.");
-            alert(t('alert_report_cancelled'));
         }
+
+        // Ora che l'input è valido, puoi procedere con l'upload
+        const finalHours = Math.max(0.01, (userMinutes / 60).toFixed(2));
+        rovasPayload.wr_hours = finalHours;
+
+        console.log("[ROVAS] Submitting report with the modified duration.");
+
+//            const response = await fetch("https://dev.rovas.app/rovas/rules/rules_proxy_create_work_report", {        //dev environment
+        const response = await fetch("https://rovas.app/rovas/rules/rules_proxy_create_work_report", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "API-KEY": ROVAS_API_KEY,
+                "TOKEN": ROVAS_TOKEN
+            },
+            body: JSON.stringify(rovasPayload)
+        });
+
+        const textResponse = await response.text();
+
+        if (!response.ok) {
+            throw new Error(`Server error ${response.status}: ${textResponse}`);
+        }
+
+        let rovasReportId;
+        try {
+            const parsed = JSON.parse(textResponse);
+            rovasReportId = parsed.created_wr_nid;
+        } catch (e) {
+            console.warn("[ROVAS] Failed to parse JSON response:", e, textResponse);
+        }
+
+        if (rovasReportId) {
+            console.log(`[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`);
+            alert(t('alert_report_success', {id: rovasReportId}));
+            chargeUsageFee(rovasReportId, finalHours); // Usa finalHours, non actualDurationMs
+        } else {
+            alert(t('alert_report_id_missing'));
+        }
+
     } catch (error) {
         console.error("[ROVAS] Error during report processing:", error);
         alert(t('alert_report_error', {error: error.message}));
