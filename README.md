@@ -1,13 +1,19 @@
-### **ROVAS Connector for OpenStreetMap iD Editor**
+## **ROVAS Connector for OpenStreetMap iD Editor**
 
-This Chrome extension is designed to seamlessly integrate with the OpenStreetMap (OSM) iD editor, automatically tracking your mapping time and submitting work reports to the [ROVAS App](https://rovas.app/). It simplifies the process of reporting your contributions to the OSM project on Rovas, ensuring accurate and effortless time logging.
+This Chrome extension is designed to seamlessly integrate with the OpenStreetMap (OSM) iD or Rapid editor, automatically tracking your mapping time and submitting work reports to the [ROVAS App](https://rovas.app/). It simplifies the process of reporting your contributions to the OSM project on Rovas, ensuring accurate and effortless time logging.
+
+
+## You can find the packed extension, ready to install on your browser, at the Chrome Web Store. Click here to [Download](https://chromewebstore.google.com/detail/rovas-connector-for-id-ed/ddjhgjigninagcaneanjmnbjgjangkpp) ##
+
+**The following instructions are for developers only.**
+
 
 ________________________________________
 
 
 **Features**
 
-- Automatic Time Tracking: Records time spent actively editing in the OSM iD editor.
+- Automatic Time Tracking: Records time spent actively editing in the OpenStreetMap **iD** or **Rapid** editors.
 - ROVAS Integration: Automatically submits detailed work reports to the ROVAS App upon changeset upload.
 - User-Configurable Credentials: Securely store your ROVAS API Key and Token via the extension's popup.
 - Session Control: Start, pause, and stop your mapping sessions directly from a convenient on-screen timer.
@@ -73,14 +79,14 @@ ________________________________________
 
 **Usage**
 
-1.	Start Mapping: Navigate to the OpenStreetMap iD editor (https://www.openstreetmap.org/edit).
-2.	Timer Badge: You should see a small timer badge appear in the bottom-right corner of the iD editor. The timer will automatically start when the page loads.
+1.	Start Mapping: Navigate to the OpenStreetMap iD editor (https://www.openstreetmap.org/edit) or Rapid editor (https://https://rapideditor.org/edit).
+2.	Timer Badge: You should see a small timer badge appear in the bottom-right corner of the editor. The timer will automatically start when the page loads.
     - Use the "Pause" button to temporarily stop tracking time.
     - Use the "Start" button to resume a paused session or begin a new one if it was manually stopped.
     - Use the "Stop" button to manually end the current mapping session. (Note: Manually stopping will not generate a ROVAS report.)
     <img width="610" height="377" alt="Image" src="https://github.com/user-attachments/assets/51ecd970-0364-4b8b-a82f-9af148cb45d5" />
 
-3.	Upload Changeset: When you are finished with your edits in iD, upload your changeset as usual.
+3.	Upload Changeset: When you are finished with your edits, upload your changeset as usual.
 4.	Confirmation: Upon successful changeset upload, the extension will automatically attempt to submit a work report to ROVAS. You should see a confirmation message appear from the extension.
    
   	<img width="477" height="283" alt="Image" src="https://github.com/user-attachments/assets/594ebbc1-4b25-4a7f-bd3d-1d78301ea6cf" />
