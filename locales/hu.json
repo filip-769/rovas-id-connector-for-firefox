@@ -33,5 +33,8 @@
   "temp_banner": "A hitelesítő adatok ideiglenesen elmentve. Töltsd ki mindkét mezőt, majd kattints a Mentés gombra a véglegesítéshez.",
   "temp_banner_saved": "Hitelesítő adatok elmentve!",
   "company_work_checkbox": "Nem kapok fizetést a cégemtől az OpenStreetMap-en végzett munkáért.",
-  "status_company_work_error": "Ezt a bővítményt tilos használni, ha egy cég fizet az iD-n végzett munkádért."
+  "status_company_work_error": "Ezt a bővítményt tilos használni, ha egy cég fizet az iD-n végzett munkádért.",
+  "confirm_submit_report_prompt": "Biztosan el akarod küldeni a munkajelentést a {id} változtatáshoz? A számított időtartam {duration_hms} ({duration_decimal} tizedes perc). A beküldés előtt alacsonyabb értéket adhatsz meg a módosításhoz:",
+  "alert_invalid_duration": "Érvénytelen időtartam. Pozitív számot adj meg.",
+  "alert_duration_too_high": "A megadott időtartam nem lehet több, mint a számított idő."
 } 

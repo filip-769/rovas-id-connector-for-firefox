@@ -33,5 +33,8 @@
   "temp_banner": "Le credenziali sono salvate temporaneamente. Completa entrambi i campi e clicca Salva per terminare.",
   "temp_banner_saved": "Credenziali salvate!",
   "company_work_checkbox": "Non sono pagato da un'azienda per il mio lavoro su OpenStreetMap.",
-  "status_company_work_error": "Non è permesso usare questo plugin se si è pagati da un'azienda per il lavoro effettuato su iD."
+  "status_company_work_error": "Non è permesso usare questo plugin se si è pagati da un'azienda per il lavoro effettuato su iD.",
+  "confirm_submit_report_prompt": "Sei sicuro di voler inviare un report di lavoro per il changeset {id}? La durata calcolata è di {duration_hms} ({duration_decimal} minuti decimali). Puoi inserire un valore inferiore per modificare la durata prima di inviare:",
+  "alert_invalid_duration": "Durata non valida. Inserisci un numero positivo.",
+  "alert_duration_too_high": "La durata inserita non può essere superiore al tempo calcolato."
 } 

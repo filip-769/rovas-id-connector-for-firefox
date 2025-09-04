@@ -33,5 +33,8 @@
   "temp_banner": "Prihlasovacie údaje sú dočasne uložené. Vyplňte obe polia a kliknite na Uložiť na dokončenie.",
   "temp_banner_saved": "Prihlasovacie údaje boli uložené!",
   "company_work_checkbox": "Za svoju prácu na OpenStreetMap nedostávam zaplatené od žiadnej spoločnosti.",
-  "status_company_work_error": "Tento doplnok nie je povolené používať, ak vás za prácu vykonanú s OpenStreetMap ID platí nejaká spoločnosť."
+  "status_company_work_error": "Tento doplnok nie je povolené používať, ak vás za prácu vykonanú s OpenStreetMap ID platí nejaká spoločnosť.",
+  "confirm_submit_report_prompt": "Naozaj chcete odoslať pracovný výkaz pre sadu zmien {id}? Vypočítaná dĺžka je {duration_hms} ({duration_decimal} desatinných minút). Pred odoslaním môžete zadať nižšiu hodnotu a upraviť trvanie:",
+  "alert_invalid_duration": "Neplatné trvanie. Zadajte prosím kladné číslo.",
+  "alert_duration_too_high": "Zadaná dĺžka nemôže byť vyššia ako vypočítaný čas."
 } 

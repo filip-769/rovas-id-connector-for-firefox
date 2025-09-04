@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Rováš - iD connector for Firefox",
-    "version": "1.5",
+    "version": "1.60",
     "description": "Tracks editing session in Openstreetmap iD and sends working reports to ROVAS App. Firefox fork of Chrome extension by dp7x.",
     "permissions": [
         "storage",
