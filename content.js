@@ -481,7 +481,6 @@ async function sendRovasReport(changesetId) {
         if (rovasReportId) {
             console.log(`[ROVAS] Report submitted automatically successfully. Rovas ID: ${rovasReportId}`);
             alert(t('alert_report_success', {id: rovasReportId}));
-            chargeUsageFee(rovasReportId, finalHours); // Usa finalHours, non actualDurationMs
         } else {
             alert(t('alert_report_id_missing'));
         }
